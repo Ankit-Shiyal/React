@@ -43,4 +43,3 @@ fruits.splice(4,2)
 console.log("remove ", fruits)
 
 console.log("after splice",fruits.length)
-

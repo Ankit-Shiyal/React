@@ -24,5 +24,3 @@ console.log("last car :", cars[cars.length - 1]);
 cars[1] = "Honda";
 console.log("favorite car :", cars[1]);
 console.log("Modify array :", cars);
-
-
