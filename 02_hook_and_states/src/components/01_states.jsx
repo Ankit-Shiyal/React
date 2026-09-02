@@ -6,7 +6,6 @@ const States = () => {
   const handleIncrement = () => {
     setCount(count + 1);
 
-    // setCount((c) => c + 1)
   };
 
   return (
@@ -32,7 +31,6 @@ export default States;
 //   const handleIncrement = () => {
 //     setCount(count + 1);
 
-//     // setCount((c) => c + 1)
 //   };
 
 //   return (
