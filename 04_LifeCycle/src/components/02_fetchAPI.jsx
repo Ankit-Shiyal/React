@@ -11,7 +11,7 @@ const Users = () => {
 
       const data = await res.json();
 
-    //   console.log(data);
+      console.log(data);
 
       setUsers(data);
     }
@@ -34,7 +34,7 @@ const Users = () => {
         <tbody>
           {users.map((u) => {
             return (
-              <tr key={u.id}>
+              <tr>
                 <td>{u.id}</td>
                 <td>{u.name}</td>
                 <td>{u.email}</td>
