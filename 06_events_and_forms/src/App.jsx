@@ -3,6 +3,10 @@ import OnClick from './components/01_OnClick'
 import Events from './components/02_Events'
 import Props from './components/03_Props'
 import Conditional_Rendering from './components/04_Conditional_Rendering'
+import Conditional from './components/05_Conditional_Rendering'
+import Controlled_Components from './components/06_Controlled_Components'
+import Uncontrolled_Components from './components/07_Uncontrolled_Components'
+import Validation from './components/08_Validation'
 
 const App = () => {
 
@@ -36,7 +40,14 @@ const App = () => {
       <Props name={name} />
       <br /> */}
 
-      <Conditional_Rendering/>
+      {/* <Conditional_Rendering/> */}
+
+      {/* <Conditional/> */}
+
+      {/* <Controlled_Components /> */}
+
+      <Uncontrolled_Components/>
+      <Validation/>
     </>
   )
 }
