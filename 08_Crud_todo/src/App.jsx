@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AddTodo from "./components/AddTodo";
+import ListTodo from "./components/ListTodo";
 
 const App = () => {
   const initialTodos = [
@@ -11,8 +12,7 @@ const App = () => {
     {
       id: 2,
       task: "practice react concept code",
-      description:
-        "you have to understand react concept and practice",
+      description: "you have to understand react concept and practice",
     },
   ];
 
@@ -20,31 +20,20 @@ const App = () => {
 
   const handleAdd = (input) => {
     const newTodo = {
-      id: Date.now(),
+      id: new Date().getTime(),
       task: input.task,
       description: input.description,
     };
 
     setTodos((prev) => [...prev, newTodo]);
+
+    alert("todo added successfully");
   };
 
   return (
     <>
-      <h1>Todo App</h1>
-
       <AddTodo handleAdd={handleAdd} />
-
-      <br />
-
-      <h2>Todo List</h2>
-
-      {todos.map((todo) => (
-        <div key={todo.id}>
-          <h4>Task: {todo.task}</h4>
-          <p>Description: {todo.description}</p>
-      
-        </div>
-      ))}
+      <ListTodo todos={todos} />
     </>
   );
 };
