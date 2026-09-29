@@ -1,62 +1,75 @@
 import React, { useEffect, useState } from "react";
-
-import "./style.css"
+import "./style.css";
 
 const AddTodo = ({ handleAdd, editVal }) => {
-    const [input, setInput] = useState({ task: "", description: "" });
+  const [input, setInput] = useState({
+    task: "",
+    description: "",
+  });
 
-    useEffect(() => {
-        editVal ? setInput(editVal) : null;
-    }, [editVal]);
+  // When edit button is clicked
+  useEffect(() => {
+    if (editVal) {
+      setInput({
+        task: editVal.task,
+        description: editVal.description,
+      });
+    }
+  }, [editVal]);
 
-    const handleChange = (field, e) => {
-        setInput((prev) => {
-            return {
-                ...prev,
-                [field]: e.target.value,
-            };
-        });
-    };
+  // Handle input change
+  const handleChange = (field, e) => {
+    setInput((prev) => {
+      return {
+        ...prev,
+        [field]: e.target.value,
+      };
+    });
+  };
 
-    console.log("input", input);
+  // Form submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    handleAdd(input);
 
-        handleAdd(input);
+    setInput({
+      task: "",
+      description: "",
+    });
+  };
 
-        setInput({ task: "", description: "" });
-    };
+  return (
+    <>
+      <form onSubmit={handleSubmit} className="form">
+        <input
+          className="input"
+          type="text"
+          placeholder="enter task name"
+          value={input.task}
+          onChange={(e) => handleChange("task", e)}
+        />
 
-    return (
-        <>
-            <form onSubmit={handleSubmit} className="form">
-                <input
-                    className="input"
-                    type="text"
-                    placeholder="enter task name"
-                    value={input.task}
-                    onChange={(e) => handleChange("task", e)}
-                />
+        <br />
+        <br />
 
-                <br />
-                <br />
+        <input
+          className="input"
+          type="text"
+          placeholder="enter description"
+          value={input.description}
+          onChange={(e) => handleChange("description", e)}
+        />
 
-                <input
-                    className="input"
-                    type="text"
-                    placeholder="enter description"
-                    value={input.description}
-                    onChange={(e) => handleChange("description", e)}
-                />
+        <br />
+        <br />
 
-                <br />
-                <br />
-
-                <button className="btn" type="submit">{editVal ? "update" : "add"}</button>
-            </form>
-        </>
-    );
+        <button className="btn" type="submit">
+          {editVal ? "update" : "add"}
+        </button>
+      </form>
+    </>
+  );
 };
 
 export default AddTodo;
