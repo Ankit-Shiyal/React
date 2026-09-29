@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
 
-const AddTodo = ({ handleAdd, editVal }) => {
+const AddTodo = ({ handleAdd, editVal, todos }) => {
   const [input, setInput] = useState({
     task: "",
     description: "",
   });
 
-  // When edit button is clicked
   useEffect(() => {
     if (editVal) {
       setInput({
@@ -17,7 +16,6 @@ const AddTodo = ({ handleAdd, editVal }) => {
     }
   }, [editVal]);
 
-  // Handle input change
   const handleChange = (field, e) => {
     setInput((prev) => {
       return {
@@ -27,7 +25,6 @@ const AddTodo = ({ handleAdd, editVal }) => {
     });
   };
 
-  // Form submit
   const handleSubmit = (e) => {
     e.preventDefault();
 

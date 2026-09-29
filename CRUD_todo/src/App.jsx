@@ -32,10 +32,10 @@ const App = () => {
         prev.map((t) =>
           t.id === editVal.id
             ? {
-                ...t,
-                task: input.task,
-                description: input.description,
-              }
+              ...t,
+              task: input.task,
+              description: input.description,
+            }
             : t
         )
       );
@@ -56,7 +56,7 @@ const App = () => {
     }
   };
 
-    const handleDelete = (id) => {
+  const handleDelete = (id) => {
     setTodos((prev) => prev.filter((t) => t.id !== id));
   };
 
@@ -66,21 +66,44 @@ const App = () => {
     setEditVal(todo);
   };
 
+
   const handleCheck = (id) => {
     setTodos((prev) =>
       prev.map((t) =>
         t.id === id
           ? {
-              ...t,
-              completed: !t.completed,
-            }
+            ...t,
+            completed: !t.completed,
+          }
           : t
       )
     );
   };
 
+  const completedTasks = todos.filter((todo) => todo.completed);
+  const pendingTasks = todos.filter((todo) => !todo.completed);
+
   return (
     <>
+      <div className="dashboard">
+        <div className="box">
+          <h3>All Task</h3>
+          <h2>{todos.length}</h2>
+        </div>
+
+        <div className="box">
+          <h3>Completed Task</h3>
+          <h2>{completedTasks.length}</h2>
+        </div>
+
+        <div className="box">
+          <h3>Pending Task</h3>
+          <h2>{pendingTasks.length}</h2>
+        </div>
+      </div>
+      <br />
+      <br />
+
       <AddTodo handleAdd={handleAdd} editVal={editVal} />
 
       <br />

@@ -1,60 +1,112 @@
 * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    font-size: 15px;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-size: 15px;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f7fb;
+  color: #1f2937;
+}
+
+.dashboard {
+  width: 700px;
+  margin: 30px auto 20px;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: 15px;
+}
+
+.box {
+  height: 110px;
+  width: 33%;
+  margin: 0;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #f8fafc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  text-align: center;
+  border: 1px solid #e5e7eb;
+}
+
+.box h3 {
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: #374151;
+}
+
+.box h2 {
+  font-size: 28px;
+  color: #2563eb;
 }
 
 .form {
-    width: 450px;
-    margin: 0 auto;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  width: 450px;
+  margin: 10px auto;
+  padding: 25px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
 .input {
-    width: 100%;
-    padding: 12px 14px;
-    border-radius: 6px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  outline: none;
 }
 
+
 .btn {
-    width: 100%;
-    padding: 12px;
-    border-radius: 6px;
-    background: #eb9525;
-    color: white;
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  background-color: #2563eb;
+  color: white;
+ 
 }
 
 .btn:hover {
-    background: #d17d07;
+  background-color: #1d4ed8;
 }
 
 .table {
-    width: 90%;
-    max-width: 900px;
-    margin: 0 auto;
-    background: white;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  width: 90%;
+  max-width: 900px;
+  margin: 25px auto;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 th {
-    background: #eb9525;
-    color: white;
-    padding: 13px;
-    /* text-align: left; */
+  background-color: #2563eb;
+  color: white;
+  padding: 10px;
+  text-align: center;
 }
 
 td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
+  padding: 10px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: center;
 }
 
 .button {
-    padding: 7px 14px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    background: #78dc26;
+  padding: 7px 14px;
+  border-radius: 5px;
+  color: white;
+  background-color: #10b981;
+ }
+
+.button:hover {
+  background-color: #05815a;
 }
