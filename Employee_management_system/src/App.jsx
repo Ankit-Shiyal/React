@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Error from "./Ui/Error";
 import MainLayout from "./router/MainLayout";
 import Employee from "./components/Employee";
+import AddEmployee from "./components/AddEmployee";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -15,6 +16,10 @@ const App = () => {
         {
           index: true,
           element: <Employee />,
+        },
+        {
+          path: "add",
+          element: <AddEmployee />,
         },
       ],
     },

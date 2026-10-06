@@ -8,16 +8,52 @@ const Employee = () => {
   const [error, setError] = useState(null);
 
   const loadData = async () => {
-    const data = await getAllEmployee();
+    try {
+      setLoading(true);
+      setError(null);
 
-    console.log("Employee Data:", data);
+      const data = await getAllEmployee();
 
-    setEmployee(data);
+      console.log("Employee Data:", data);
+
+      setEmployee(data);
+    } catch (error) {
+      console.log("Error:", error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     loadData();
   }, []);
+
+
+  if (loading) {
+    return (
+      <div className="container mt-5 text-center">
+        <h3>Loading...</h3>
+      </div>
+    );
+  }
+
+  // Error
+  if (error) {
+    return (
+      <div className="container mt-5 text-center">
+        <h3 className="text-danger">Something went wrong</h3>
+        <p>{error}</p>
+
+        <button
+          className="btn btn-primary"
+          onClick={loadData}
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="container mt-4">
