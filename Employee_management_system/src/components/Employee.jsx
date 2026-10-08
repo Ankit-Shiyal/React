@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import { getAllEmployee } from "../API/EmployeeApi";
+import { getAllEmployee, deleteEmployee } from "../API/EmployeeApi";
+
+// import { getAllEmployee, deleteEmployee } from "../API/EmployeeAxios";
 
 const Employee = () => {
   const [employee, setEmployee] = useState([]);
@@ -55,6 +57,16 @@ const Employee = () => {
     );
   }
 
+const handleDelete = async (id) => {
+  try {
+    await deleteEmployee(id);
+    await loadData();
+  } catch (error) {
+    console.log("Delete Error:", error);
+    setError(error.message);
+  }
+};
+
   return (
     <div className="container mt-4">
       <h2 className="mb-4">Employee List</h2>
@@ -69,6 +81,7 @@ const Employee = () => {
             <th>Department</th>
             <th>Salary</th>
             <th>Mobile</th>
+            <th colSpan={2}>Action</th>
           </tr>
         </thead>
 
@@ -82,6 +95,16 @@ const Employee = () => {
               <td>{item.department}</td>
               <td>₹{item.salary}</td>
               <td>{item.phoneNumber}</td>
+              <td><button>Edit</button></td>
+              <td>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => handleDelete(item._id)}
+                >
+                  Delete
+                </button>
+              </td>
+
             </tr>
           ))}
         </tbody>

@@ -8,7 +8,8 @@ import * as formik from "formik";
 import { Container } from "react-bootstrap";
 
 import EmployeeSchema from "../validation/EmployeeValidation";
-import { addEmployee } from "../API/EmployeeApi";
+// import { addEmployee } from "../API/EmployeeApi";
+import { addEmployee } from "../API/EmployeeAxios";
 
 const AddEmployee = () => {
     const { Formik } = formik;
