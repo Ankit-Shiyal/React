@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { getAllEmployee, deleteEmployee } from "../API/EmployeeApi";
+import { useNavigate } from "react-router-dom";
 
 // import { getAllEmployee, deleteEmployee } from "../API/EmployeeAxios";
 
@@ -8,6 +9,8 @@ const Employee = () => {
   const [employee, setEmployee] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate()
 
   const loadData = async () => {
     try {
@@ -57,15 +60,15 @@ const Employee = () => {
     );
   }
 
-const handleDelete = async (id) => {
-  try {
-    await deleteEmployee(id);
-    await loadData();
-  } catch (error) {
-    console.log("Delete Error:", error);
-    setError(error.message);
-  }
-};
+  const handleDelete = async (id) => {
+    try {
+      await deleteEmployee(id);
+      await loadData();
+    } catch (error) {
+      console.log("Delete Error:", error);
+      setError(error.message);
+    }
+  };
 
   return (
     <div className="container mt-4">
@@ -95,7 +98,12 @@ const handleDelete = async (id) => {
               <td>{item.department}</td>
               <td>₹{item.salary}</td>
               <td>{item.phoneNumber}</td>
-              <td><button>Edit</button></td>
+              <td><button
+                className="btn btn-warning btn-sm"
+                onClick={() => navigate(`/update/${item._id}`)}
+              >
+                Update
+              </button></td>
               <td>
                 <button
                   className="btn btn-danger btn-sm"
