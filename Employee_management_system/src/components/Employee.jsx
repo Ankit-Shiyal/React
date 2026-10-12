@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 // import { getAllEmployee, deleteEmployee } from "../API/EmployeeAxios";
 
+import Loading from "../Ui/Loading"
+
 const Employee = () => {
   const [employee, setEmployee] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -36,10 +38,15 @@ const Employee = () => {
 
 
   if (loading) {
+    return <Loading></Loading>;
+  } else if (error) {
+    return <h1 className="text-center" style={{ color: "red" }}>
+      {error.message}
+    </h1>;
     return (
-      <div className="container mt-5 text-center">
-        <h3>Loading...</h3>
-      </div>
+      <h1 className="text-center" style={{ color: "red" }}>
+        {error.message}
+      </h1>
     );
   }
 

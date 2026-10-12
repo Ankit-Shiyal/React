@@ -1,162 +1,229 @@
 
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import Row from "react-bootstrap/Row";
+import React, { useEffect, useState } from "react";
 import * as formik from "formik";
-import { Container } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
+
+import {
+  addEmployee,
+  getEmpById,
+  UpdateEmployee,
+} from "../API/EmployeeAxios";
 
 import EmployeeSchema from "../validation/EmployeeValidation";
-// import { addEmployee } from "../API/EmployeeApi";
-import { addEmployee } from "../API/EmployeeAxios";
 
-const AddEmployee = () => {
-    const { Formik } = formik;
+function EmployeeForm() {
+  const { Formik } = formik;
+  const navigate = useNavigate();
+  const { id } = useParams();
 
-    return (
-        <Container className="mt-5">
-            <h2 className="mb-4">Add Employee</h2>
+  const [loading, setLoading] = useState(false);
 
-            <Formik
-                validationSchema={EmployeeSchema}
-                onSubmit={async (values, { resetForm }) => {
-                    try {
-                        console.log("Sending data:", values);
+  const [initialValues, setInitialValues] = useState({
+    name: "",
+    id: "",
+    email: "",
+    department: "",
+    salary: "",
+    phoneNumber: "",
+  });
 
-                        const data = await addEmployee(values);
+  useEffect(() => {
+    if (!id) return;
 
-                        console.log("Employee added:", data);
+    const fetchEmployeeDetail = async () => {
+      try {
+        setLoading(true);
 
-                        resetForm();
-                    } catch (error) {
-                        console.error("Error:", error);
-                    }
-                }}
-                initialValues={{
-                    name: "",
-                    id: "",
-                    email: "",
-                    department: "",
-                    salary: "",
-                    phoneNumber: "",
-                }}
-            >
-                {({
-                    handleSubmit,
-                    handleChange,
-                    values,
-                    touched,
-                    errors,
-                }) => (
+        const emp = await getEmpById(id);
 
-                    <Form noValidate onSubmit={handleSubmit}>
-                        <Row className="mb-3">
-                            <Form.Group as={Col} md="4">
-                                <Form.Label>Name</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Enter your Name"
-                                    name="name"
-                                    value={values.name}
-                                    onChange={handleChange}
-                                    isInvalid={touched.name && !!errors.name}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.name}
-                                </Form.Control.Feedback>
-                            </Form.Group>
+        setInitialValues({
+          name: emp.name ?? "",
+          id: emp.id ?? "",
+          email: emp.email ?? "",
+          department: emp.department ?? "",
+          salary: emp.salary ?? "",
+          phoneNumber: emp.phoneNumber ?? "",
+        });
+      } catch (error) {
+        console.error("Fetch Employee Error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-                            <Form.Group as={Col} md="4">
-                                <Form.Label>ID</Form.Label>
-                                <Form.Control
-                                    type="number"
-                                    placeholder="Enter Employee ID"
-                                    name="id"
-                                    value={values.id}
-                                    onChange={handleChange}
-                                    isInvalid={touched.id && !!errors.id}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.id}
-                                </Form.Control.Feedback>
-                            </Form.Group>
+    fetchEmployeeDetail();
+  }, [id]);
 
-                            <Form.Group as={Col} md="4">
-                                <Form.Label>Email</Form.Label>
-                                <InputGroup hasValidation>
-                                    <Form.Control
-                                        type="email"
-                                        placeholder="Enter Email"
-                                        name="email"
-                                        value={values.email}
-                                        onChange={handleChange}
-                                        isInvalid={touched.email && !!errors.email}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        {errors.email}
-                                    </Form.Control.Feedback>
-                                </InputGroup>
-                            </Form.Group>
-                        </Row>
+  const handleFormSubmit = async (values) => {
+    try {
+      console.log("Form Data:", values);
 
-                        <Row className="mb-3">
-                            <Form.Group as={Col} md="6">
-                                <Form.Label>Department</Form.Label>
-                                <Form.Select
-                                    name="department"
-                                    value={values.department}
-                                    onChange={handleChange}
-                                    isInvalid={touched.department && !!errors.department}
-                                >
-                                    <option value="">Select Department</option>
-                                    <option value="fullstack">Full Stack</option>
-                                    <option value="graphic design">Graphic Design</option>
-                                    <option value="ui/ux design">UI/UX Design</option>
-                                    <option value="video editing">Video Editing</option>
-                                </Form.Select>
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.department}
-                                </Form.Control.Feedback>
-                            </Form.Group>
+      if (id) {
+        await UpdateEmployee(id, values);
+        alert("Employee updated successfully!");
+      } else {
+        await addEmployee(values);
+        alert("Employee added successfully!");
+      }
 
-                            <Form.Group as={Col} md="3">
-                                <Form.Label>Salary</Form.Label>
-                                <Form.Control
-                                    type="number"
-                                    placeholder="Enter Salary"
-                                    name="salary"
-                                    value={values.salary}
-                                    onChange={handleChange}
-                                    isInvalid={touched.salary && !!errors.salary}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.salary}
-                                </Form.Control.Feedback>
-                            </Form.Group>
+      navigate("/");
+    } catch (error) {
+      console.error("Submit Error:", error);
 
-                            <Form.Group as={Col} md="3">
-                                <Form.Label>Phone Number</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Enter Phone Number"
-                                    name="phoneNumber"
-                                    value={values.phoneNumber}
-                                    onChange={handleChange}
-                                    isInvalid={touched.phoneNumber && !!errors.phoneNumber}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.phoneNumber}
-                                </Form.Control.Feedback>
-                            </Form.Group>
-                        </Row>
+      alert(
+        error.response?.data?.message ||
+        error.message ||
+        "Something went wrong"
+      );
+    }
+  };
 
-                        <Button type="submit">Add Employee</Button>
-                    </Form>
-                )}
-            </Formik>
-        </Container>
-    );
-};
+  if (loading) {
+    return <h3 className="text-center mt-5">Loading...</h3>;
+  }
 
-export default AddEmployee;
+  return (
+    <Container className="mt-5">
+      <h2 className="mb-4">
+        {id ? "Update Employee" : "Add Employee"}
+      </h2>
+
+      <Formik
+        enableReinitialize
+        initialValues={initialValues}
+        validationSchema={EmployeeSchema}
+        onSubmit={handleFormSubmit}
+      >
+        {({
+          handleSubmit,
+          handleChange,
+          values,
+          touched,
+          errors,
+          isSubmitting,
+        }) => (
+          <Form noValidate onSubmit={handleSubmit}>
+            <Row className="mb-3">
+              <Form.Group as={Col} md="4">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  placeholder="Enter Name"
+                  value={values.name}
+                  onChange={handleChange}
+                  isInvalid={touched.name && !!errors.name}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.name}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group as={Col} md="4">
+                <Form.Label>Employee ID</Form.Label>
+                <Form.Control
+                  type="number"
+                  name="id"
+                  placeholder="Enter Employee ID"
+                  value={values.id}
+                  onChange={handleChange}
+                  isInvalid={touched.id && !!errors.id}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.id}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group as={Col} md="4">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  placeholder="Enter Email"
+                  value={values.email}
+                  onChange={handleChange}
+                  isInvalid={touched.email && !!errors.email}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.email}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Row>
+
+            <Row className="mb-3">
+              <Form.Group as={Col} md="6">
+                <Form.Label>Department</Form.Label>
+                <Form.Select
+                  name="department"
+                  value={values.department}
+                  onChange={handleChange}
+                  isInvalid={
+                    touched.department && !!errors.department
+                  }
+                >
+                  <option value="">Select Department</option>
+                  <option value="fullstack">Full Stack</option>
+                  <option value="graphic design">Graphic Design</option>
+                  <option value="ui/ux design">UI/UX Design</option>
+                  <option value="video editing">Video Editing</option>
+                </Form.Select>
+                <Form.Control.Feedback type="invalid">
+                  {errors.department}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group as={Col} md="3">
+                <Form.Label>Salary</Form.Label>
+                <Form.Control
+                  type="number"
+                  name="salary"
+                  placeholder="Enter Salary"
+                  value={values.salary}
+                  onChange={handleChange}
+                  isInvalid={touched.salary && !!errors.salary}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.salary}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group as={Col} md="3">
+                <Form.Label>Phone Number</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="phoneNumber"
+                  placeholder="Enter Phone Number"
+                  value={values.phoneNumber}
+                  onChange={handleChange}
+                  isInvalid={
+                    touched.phoneNumber && !!errors.phoneNumber
+                  }
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.phoneNumber}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Row>
+
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting
+                ? "Saving..."
+                : id
+                  ? "Update Employee"
+                  : "Add Employee"}
+            </Button>
+          </Form>
+        )}
+      </Formik>
+    </Container>
+  );
+}
+
+export default EmployeeForm;
