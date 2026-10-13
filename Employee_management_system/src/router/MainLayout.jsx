@@ -1,15 +1,17 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../Ui/Navbar";
 
 const MainLayout = () => {
-    return (
-        <>
-            <Navbar />
-            <Outlet />
-            {/* <Footer/> */}
-        </>
-    );
+  return (
+    <div className="app-shell">
+      <div className="app-content-area">
+        <Navbar />
+        <main className="app-main">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
 };
 
 export default MainLayout;

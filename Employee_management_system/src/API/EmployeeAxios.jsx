@@ -1,17 +1,18 @@
+/* eslint-disable react-refresh/only-export-components */
 import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export async function getAllEmployee() {
-
   try {
+    const res = await axios(`${BASE_URL}/allEmployee`);
 
-    const res = await axios(`${BASE_URL}/allEmployee`)
-
-    return res.data.Employees
-
+    return res.data.Employees || [];
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(
+      error.response?.data?.message || error.message || "Failed to fetch employees",
+      { cause: error }
+    );
   }
 }
 
@@ -19,15 +20,18 @@ export async function addEmployee(EmpData) {
   try {
     const res = await axios.post(`${BASE_URL}/add`, EmpData);
 
-    if (res.status !== 201) {
+    if (res.status !== 201 && res.status !== 200) {
       throw new Error("Failed to add Employee data");
     }
 
     console.log("Add Employee Response:", res.data);
 
-    return res.data.Employees;
+    return res.data.Employees ?? res.data;
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(
+      error.response?.data?.message || error.message || "Failed to add employee",
+      { cause: error }
+    );
   }
 }
 
@@ -43,7 +47,10 @@ export async function deleteEmployee(id) {
 
     return res.data;
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(
+      error.response?.data?.message || error.message || "Failed to delete employee",
+      { cause: error }
+    );
   }
 }
 
@@ -57,9 +64,12 @@ export async function UpdateEmployee(id, EmpData) {
 
     console.log("update Response:", res.data);
 
-    return res.data.EmployeeData;
+    return res.data.EmployeeData ?? res.data;
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(
+      error.response?.data?.message || error.message || "Failed to update employee",
+      { cause: error }
+    );
   }
 }
 
@@ -77,7 +87,8 @@ export const getEmpById = async (id) => {
     );
 
     throw new Error(
-      error.response?.data?.message || error.message
+      error.response?.data?.message || error.message,
+      { cause: error }
     );
   }
 };

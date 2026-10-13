@@ -3,18 +3,22 @@ import * as yup from "yup";
 const EmployeeSchema = yup.object().shape({
   name: yup
     .string()
-    .required("Name is required")
+    .trim()
+    .required("Employee name is required")
     .min(3, "Name must be at least 3 characters"),
 
   id: yup
     .number()
-    .typeError("ID must be a number")
-    .required("ID is required"),
+    .typeError("Employee ID must be a valid number")
+    .positive("Employee ID must be greater than 0")
+    .integer("Employee ID must be a whole number")
+    .required("Employee ID is required"),
 
   email: yup
     .string()
-    .email("Enter a valid email")
-    .required("Email is required"),
+    .trim()
+    .email("Enter a valid email address")
+    .required("Email address is required"),
 
   department: yup
     .string()
@@ -22,13 +26,14 @@ const EmployeeSchema = yup.object().shape({
 
   salary: yup
     .number()
-    .typeError("Salary must be a number")
+    .typeError("Salary must be a valid number")
     .positive("Salary must be greater than 0")
-    .required("Salary is required"),
+    .required("Monthly salary is required"),
 
   phoneNumber: yup
     .string()
-    .matches(/^[0-9]{10}$/, "Phone number must be 10 digits")
+    .trim()
+    .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits")
     .required("Phone number is required"),
 });
 
