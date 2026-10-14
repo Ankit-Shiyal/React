@@ -30,8 +30,8 @@ const ListExpense = ({ expenseList }) => {
                 <td>{expense.Description}</td>
                 <td>₹{expense.Amount}</td>
                 <td>{expense.Date}</td>
-                <td>{expense.Category || expense.category}</td>
-                <td>{expense.Type || expense.type}</td>
+                <td>{expense.Category }</td>
+                <td>{expense.Type }</td>
               </tr>
             ))
           )}
