@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { expenseContext } from "../context/ExpenseContext";
 
 const ListExpense = () => {
-  const { expenseList, DeleteExpense } = useContext(expenseContext);
+  const { expenseList, DeleteExpense, handleEdit } = useContext(expenseContext);
 
   return (
     <div>
@@ -23,9 +23,9 @@ const ListExpense = () => {
         </thead>
 
         <tbody>
-          {expenseList.map((expense) => (
+          {expenseList.map((expense, index) => (
             <tr key={expense.id}>
-              <td>{expense.id}</td>
+              <td>{index + 1}</td>
               <td>{expense.Title}</td>
               <td>{expense.Description}</td>
               <td>₹{expense.Amount}</td>
@@ -33,7 +33,7 @@ const ListExpense = () => {
               <td>{expense.Category}</td>
               <td>{expense.Type}</td>
               <td>
-                <button>Update</button>
+                <button onClick={() => handleEdit(expense.id)}>Update</button>
               </td>
               <td>
                 <button onClick={() => DeleteExpense(expense.id)}>

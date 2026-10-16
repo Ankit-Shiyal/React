@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { expenseContext } from "../context/ExpenseContext";
 
 const initialForm = {
@@ -11,8 +11,13 @@ const initialForm = {
 };
 
 const Add = () => {
-  const { addExpense } = useContext(expenseContext);
+  const { addExpense, editVal } = useContext(expenseContext);
   const [input, setInput] = useState(initialForm);
+
+  useEffect(() => {
+    editVal ? setInput(editVal) : null;
+  }, [editVal]);
+
 
   const handleChange = (field, e) => {
     setInput((prev) => ({
@@ -100,7 +105,7 @@ const Add = () => {
         <br />
         <br />
 
-        <button type="submit">Add</button>
+        <button type="submit">{editVal ? "update" : "add"}</button>
       </form>
     </div>
   );

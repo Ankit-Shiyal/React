@@ -1,6 +1,14 @@
+
 import { createContext, useState } from "react";
 
-export const expenseContext = createContext();
+export const expenseContext = createContext({
+  expenseList: [],
+  addExpense: () => {},
+  DeleteExpense: () => {},
+  editVal: null,
+  handleEdit: () => {},
+  setEditVal: () => {},
+});
 
 const initialValues = [
   {
@@ -25,6 +33,7 @@ const initialValues = [
 
 const ExpenseContextProvider = ({ children }) => {
   const [expenseList, setExpenseList] = useState(initialValues);
+  const [editVal, setEditVal] = useState(null);
 
   const addExpense = (input) => {
     const newExpense = {
@@ -41,10 +50,18 @@ const ExpenseContextProvider = ({ children }) => {
     );
   };
 
+  const handleEdit = (id) => {
+    const expense = expenseList.find((item) => item.id === id);
+    setEditVal(expense);
+  };
+
   const value = {
     expenseList,
     addExpense,
     DeleteExpense,
+    editVal,
+    setEditVal,
+    handleEdit,
   };
 
   return (
