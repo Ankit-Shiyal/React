@@ -1,4 +1,3 @@
-
 import { createContext, useState } from "react";
 
 export const expenseContext = createContext();
@@ -36,9 +35,16 @@ const ExpenseContextProvider = ({ children }) => {
     setExpenseList((prev) => [...prev, newExpense]);
   };
 
+  const DeleteExpense = (id) => {
+    setExpenseList((prev) =>
+      prev.filter((expense) => expense.id !== id)
+    );
+  };
+
   const value = {
     expenseList,
     addExpense,
+    DeleteExpense,
   };
 
   return (

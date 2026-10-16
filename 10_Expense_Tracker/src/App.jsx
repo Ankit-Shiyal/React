@@ -11,6 +11,8 @@ const App = () => {
     addExpense(input);
   };
 
+
+  
   return (
     <>
       <Add handleAdd={handleAdd} />
