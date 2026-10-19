@@ -40,14 +40,9 @@ const ExpenseContextProvider = ({ children }) => {
 
   const addExpense = (input) => {
     if (
-      !input.Title ||
-      !input.Description ||
-      !input.Amount ||
-      !input.Date ||
-      !input.Category ||
-      !input.Type
+      !input
     ) {
-      return;
+      return(console.log("Add input data"))
     }
 
     if (editVal) {
