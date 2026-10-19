@@ -8,6 +8,9 @@ export const expenseContext = createContext({
   editVal: null,
   handleEdit: () => {},
   setEditVal: () => {},
+  debit: 0,
+  credit: 0,
+  balance: 0,
 });
 
 const initialValues = [
@@ -27,7 +30,7 @@ const initialValues = [
     Amount: 5000,
     Date: "2026-10-14",
     Category: "sports",
-    Type: "debit",
+    Type: "credit",
   },
 ];
 
@@ -36,12 +39,40 @@ const ExpenseContextProvider = ({ children }) => {
   const [editVal, setEditVal] = useState(null);
 
   const addExpense = (input) => {
-    const newExpense = {
-      ...input,
-      id: Date.now(),
-    };
+    if (
+      !input.Title ||
+      !input.Description ||
+      !input.Amount ||
+      !input.Date ||
+      !input.Category ||
+      !input.Type
+    ) {
+      return;
+    }
 
-    setExpenseList((prev) => [...prev, newExpense]);
+    if (editVal) {
+      setExpenseList((prev) =>
+        prev.map((expense) =>
+          expense.id === editVal.id
+            ? {
+                ...input,
+                id: editVal.id,
+                Amount: Number(input.Amount),
+              }
+            : expense
+        )
+      );
+
+      setEditVal(null);
+    } else {
+      const newExpense = {
+        ...input,
+        id: Date.now(),
+        Amount: Number(input.Amount),
+      };
+
+      setExpenseList((prev) => [...prev, newExpense]);
+    }
   };
 
   const DeleteExpense = (id) => {
@@ -51,9 +82,22 @@ const ExpenseContextProvider = ({ children }) => {
   };
 
   const handleEdit = (id) => {
-    const expense = expenseList.find((item) => item.id === id);
-    setEditVal(expense);
+    const expense = expenseList.find(
+      (item) => item.id === id
+    );
+
+    setEditVal(expense || null);
   };
+
+  const debit = expenseList
+    .filter((p) => p.Type === "debit")
+    .reduce((acc, curr) => acc + Number(curr.Amount), 0);
+
+  const credit = expenseList
+    .filter((p) => p.Type === "credit")
+    .reduce((acc, curr) => acc + Number(curr.Amount), 0);
+
+  const balance = credit - debit;
 
   const value = {
     expenseList,
@@ -62,6 +106,9 @@ const ExpenseContextProvider = ({ children }) => {
     editVal,
     setEditVal,
     handleEdit,
+    debit,
+    credit,
+    balance,
   };
 
   return (
