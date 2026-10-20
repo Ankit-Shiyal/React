@@ -82,14 +82,20 @@ const Add = () => {
         />
         <br />
         <br />
+        <select name="" id="" value={input.Category}
+          onChange={(e) => handleChange("Category", e)}>
 
-        <input
-          type="text"
-          placeholder="Enter Category"
-          value={input.Category}
-          onChange={(e) => handleChange("Category", e)}
-          required
-        />
+          <option value="">Select</option>
+          <option value="Money Transfer">Money Transfer</option>
+          <option value="Cash Withdrawal">Cash Withdrawal</option>
+          <option value="General Expense">General Expense</option>
+          <option value="Food&Dining">Food&Dining</option>
+          <option value="HealthCare">HealthCare</option>
+          <option value="Shopping">Shopping</option>
+          <option value="Travel">Travel</option>
+        </select>
+
+
         <br />
         <br />
 

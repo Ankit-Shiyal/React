@@ -20,7 +20,7 @@ const initialValues = [
     Description: "Lunch",
     Amount: 1000,
     Date: "2026-10-14",
-    Category: "food",
+    Category: "Food&Dining",
     Type: "debit",
   },
   {
