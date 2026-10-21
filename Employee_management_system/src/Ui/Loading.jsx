@@ -1,17 +1,62 @@
-const Loading = ({ message = "Loading workforce data...", subtext = "Fetching latest records from server" }) => {
+import React from "react";
+
+const Loading = () => {
   return (
-    <div className="enterprise-card p-5 my-4 text-center">
-      <div className="d-inline-flex align-items-center justify-content-center mb-3">
-        <div
-          className="spinner-border text-primary"
-          role="status"
-          style={{ width: "2.5rem", height: "2.5rem", borderWidth: "0.22rem" }}
-        >
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
-      <h6 className="fw-semibold text-dark mb-1">{message}</h6>
-      <p className="text-muted small mb-0">{subtext}</p>
+    <div
+      style={{
+        position: "fixed",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: "280px",
+        padding: "30px",
+        backgroundColor: "#fff",
+        borderRadius: "15px",
+        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+        textAlign: "center",
+      }}
+    >
+      <div
+        style={{
+          width: "45px",
+          height: "45px",
+          border: "4px solid #e9ecef",
+          borderTop: "4px solid #0d6efd",
+          borderRadius: "50%",
+          margin: "0 auto",
+          animation: "spin 0.8s linear infinite",
+        }}
+      />
+
+      <h5
+        style={{
+          marginTop: "20px",
+          marginBottom: "8px",
+          fontWeight: "600",
+        }}
+      >
+        Loading...
+      </h5>
+
+      <p
+        style={{
+          margin: 0,
+          color: "#6c757d",
+          fontSize: "14px",
+        }}
+      >
+        Please wait
+      </p>
+
+      <style>
+        {`
+          @keyframes spin {
+            to {
+              transform: rotate(360deg);
+            }
+          }
+        `}
+      </style>
     </div>
   );
 };

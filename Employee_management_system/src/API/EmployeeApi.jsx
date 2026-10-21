@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export async function getAllEmployee() {
@@ -13,11 +12,9 @@ export async function getAllEmployee() {
 
     console.log("Employee data:", data);
 
-    return data.Employees || [];
+    return data.Employees;
   } catch (error) {
-    throw new Error(error.message || "Unable to connect to the server", {
-      cause: error,
-    });
+    throw new Error(error.message);
   }
 }
 
@@ -72,7 +69,7 @@ export async function deleteEmployee(id) {
 export async function UpdateEmployee(id, EmpData) {
   try {
     const res = await fetch(`${BASE_URL}/${id}`, {
-      method: "PATCH",
+      method: "patch",
       headers: {
         "Content-Type": "application/json",
       },
@@ -95,6 +92,8 @@ export async function UpdateEmployee(id, EmpData) {
   }
 }
 
+
+
 export const getEmpById = async (id) => {
   try {
     const res = await fetch(`${BASE_URL}/${id}`);
@@ -102,7 +101,9 @@ export const getEmpById = async (id) => {
     const data = await res.json();
 
     if (!res.ok) {
-      throw new Error(data.message || "Failed to get employee data");
+      throw new Error(
+        data.message || "Failed to get employee data"
+      );
     }
 
     console.log("Employee By ID:", data);
