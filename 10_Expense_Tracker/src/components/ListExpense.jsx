@@ -22,35 +22,59 @@ const ListExpense = () => {
 
   const filterList = expenseList
     .filter((l) =>
-      l.Title?.toLowerCase().includes(expenseQuery.title.toLowerCase())
+      l.Title?.toLowerCase().includes(expenseQuery.title.toLowerCase()),
     )
     .filter((l) =>
       expenseQuery.Type === "all" ? true : l.Type === expenseQuery.Type,
     )
     .filter((l) =>
-      expenseQuery.Category === "all" ? true : l.Category === expenseQuery.Category,
-    )
+      expenseQuery.Category === "all"
+        ? true
+        : l.Category === expenseQuery.Category,
+    );
+
+  const sortedList = [...filterList].sort((a, b) => {
+    if (expenseQuery.sort === "asc") {
+      return b.id - a.id;
+    }
+
+    if (expenseQuery.sort === "desc") {
+      return a.id - b.id;
+    }
+
+    if (expenseQuery.sort === "moneyAsc") {
+      return Number(a.amount) - Number(b.amount);
+    }
+
+    if (expenseQuery.sort === "moneyDsc") {
+      return Number(b.amount) - Number(a.amount);
+    }
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-
   };
-  console.log("expenseQuery", expenseQuery)
+  console.log("expenseQuery", expenseQuery);
 
   return (
     <>
       <div>
         <form onSubmit={handleSubmit}>
-
           <label htmlFor="">Search</label>
-          <input type="text" placeholder="enter title"
+          <input
+            type="text"
+            placeholder="enter title"
             value={expenseQuery.title}
-            onChange={(e) => handleChange("title", e)} />
+            onChange={(e) => handleChange("title", e)}
+          />
 
           <label htmlFor="">Category</label>
-          <select name="" id="" value={expenseQuery.Category}
-            onChange={(e) => handleChange("Category", e)}>
+          <select
+            name=""
+            id=""
+            value={expenseQuery.Category}
+            onChange={(e) => handleChange("Category", e)}
+          >
             <option value="">Select</option>
             <option value="Money Transfer">Money Transfer</option>
             <option value="Cash Withdrawal">Cash Withdrawal</option>
@@ -72,13 +96,18 @@ const ListExpense = () => {
           </select>
 
           <label htmlFor="">sort</label>
-          <select name="" id="" value={expenseQuery.sort}
-            onChange={(e) => handleChange("sort", e)}>
+          <select
+            name=""
+            id=""
+            value={expenseQuery.sort}
+            onChange={(e) => handleChange("sort", e)}
+          >
             <option value="">Select Type</option>
             <option value="asc">ascending</option>
             <option value="desc">descending</option>
             <option value="moneyAsc">Money Ascending</option>
-            <option value="moneyDsc">Money Descending</option></select>
+            <option value="moneyDsc">Money Descending</option>
+          </select>
         </form>
       </div>
 
@@ -100,7 +129,7 @@ const ListExpense = () => {
           </thead>
 
           <tbody>
-            {filterList.map((expense, index) => (
+            {sortedList.map((expense, index) => (
               <tr key={expense.id}>
                 <td>{index + 1}</td>
                 <td>{expense.Title}</td>
