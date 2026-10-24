@@ -17,14 +17,14 @@ const App = () => {
   
   return (
     <>
-      {/* <Add handleAdd={handleAdd} />
+      <Add handleAdd={handleAdd} />
       <br />
       <br />
       <ExpenseStats/>
       <br /><br />
-      <ListExpense expenseList={expenseList} /> */}
+      <ListExpense expenseList={expenseList} />
 
-      <Example/>
+      {/* <Example/> */}
     </>
   );
 };
