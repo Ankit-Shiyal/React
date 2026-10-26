@@ -71,13 +71,6 @@ export const getEmpById = async (id) => {
 
     return res.data.EmployeeData;
   } catch (error) {
-    console.error(
-      "Get Employee Error:",
-      error.response?.data?.message || error.message
-    );
-
-    throw new Error(
-      error.response?.data?.message || error.message
-    );
+    throw new Error(error.message);
   }
 };
