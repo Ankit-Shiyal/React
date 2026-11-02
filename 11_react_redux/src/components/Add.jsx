@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { add } from "../features/inventorySlice";
 
 const Add = () => {
@@ -9,8 +9,13 @@ const Add = () => {
         price: "",
         category: "",
     });
+    const { editValue } = useSelector((state) => state.inventory);
 
-
+useEffect(() => {
+    if (editValue) {
+        setInput(editValue);
+    }
+}, [editValue]);
     const dispatch = useDispatch()
 
     const handleChange = (field, e) => {

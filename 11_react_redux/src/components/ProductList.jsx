@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteProduct } from "../features/inventorySlice";
+import { deleteProduct, setEditValue } from "../features/inventorySlice";
 
 const ProductList = () => {
   const inventoryList = useSelector(
@@ -31,13 +31,15 @@ const ProductList = () => {
 
         <tbody>
           {inventoryList.map((item, index) => (
-            <tr key={item.id}>
+            <tr key={item.id || index}>
               <td>{index + 1}</td>
               <td>{item.name}</td>
               <td>{item.qty}</td>
               <td>{item.price}</td>
               <td>{item.category}</td>
-              <td><button>update</button></td>
+              <td><button onClick={() => dispatch(setEditValue(item))}>
+                Edit
+              </button></td>
               <td>
                 <button onClick={() => handleDelete(item.id)}>
                   Delete

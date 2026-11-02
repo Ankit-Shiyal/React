@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     products: [
         {
+            id: 1,
             name: "phone",
             qty: 1,
             price: 100000,
@@ -11,9 +12,11 @@ const initialState = {
     ],
     editValue: null,
 };
+
 const inventorySlice = createSlice({
     name: "inventory",
     initialState,
+
     reducers: {
         add: (state, action) => {
             const newProduct = {
@@ -22,9 +25,8 @@ const inventorySlice = createSlice({
             };
 
             state.products.push(newProduct);
-
-            console.log("product list", [...state.products]);
         },
+
         deleteProduct: (state, action) => {
             state.products = state.products.filter(
                 (item) => item.id !== action.payload
@@ -32,11 +34,12 @@ const inventorySlice = createSlice({
         },
 
         setEditValue: (state, action) => {
-            state.editValue = state.products.find((l) => l.id === action.payload);
+            state.editValue = action.payload;
         },
     },
 });
 
-export const { add, deleteProduct, setEditValue } = inventorySlice.actions;
+export const { add, deleteProduct, setEditValue } =
+    inventorySlice.actions;
 
 export default inventorySlice.reducer;
