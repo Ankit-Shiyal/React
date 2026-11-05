@@ -11,11 +11,11 @@ const Add = () => {
     });
     const { editValue } = useSelector((state) => state.inventory);
 
-useEffect(() => {
-    if (editValue) {
-        setInput(editValue);
-    }
-}, [editValue]);
+    useEffect(() => {
+        if (editValue) {
+            setInput(editValue);
+        }
+    }, [editValue]);
     const dispatch = useDispatch()
 
     const handleChange = (field, e) => {
@@ -30,30 +30,30 @@ useEffect(() => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-         if (!input.name || !input.qty || !input.price || !input.category) {
+        if (!input.name || !input.qty || !input.price || !input.category) {
             return alert("all data required")
-        } 
+        }
 
 
         if (editValue) {
-             dispatch(handleEdit(input));
+            dispatch(handleEdit(input));
 
-             setInput({
-            name: "",
-            qty: "",
-            price: "",
-            category: "",
-        });
+            setInput({
+                name: "",
+                qty: "",
+                price: "",
+                category: "",
+            });
 
         } else {
             dispatch(add(input))
 
-        setInput({
-            name: "",
-            qty: "",
-            price: "",
-            category: "",
-        });
+            setInput({
+                name: "",
+                qty: "",
+                price: "",
+                category: "",
+            });
         }
     };
     console.log("input", input);
